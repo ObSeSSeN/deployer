@@ -22,7 +22,6 @@ ifndef COMPOSER
 endif
 
 ## Install dependencies
-
 install: composer ##@production Install dependencies
 	@$(MAKE) permissions
 ifndef COMPOSER

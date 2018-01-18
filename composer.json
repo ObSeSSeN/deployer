@@ -108,7 +108,23 @@
             "php artisan ide-helper:meta",
             "php artisan ide-helper:models --nowrite",
             "php artisan optimize"
-        ]
+        ],
+        "dev:lint": "parallel-lint app/ database/ config/ resources/ tests/ public/ bootstrap/ artisan",
+        "dev:phpcs": "phpcs",
+        "dev:phpcpd": "phpcpd --progress app/",
+        "dev:phpmd": "phpmd app text phpmd.xml.dist",
+        "dev:phpdoc": "phpdoccheck --directory=app --files-per-line 60",
+        "test:unit": "phpunit --no-coverage --testsuite 'Unit Tests'",
+        "test:integration": "phpunit --no-coverage --testsuite 'Integration Tests'"
+    },
+    "scripts-descriptions": {
+        "dev:lint": "Ensure all files are free of syntax errors",
+        "dev:phpcs": "Check that the code follows PSR-2 standard",
+        "dev:phpcpd": "Copy/Paste detection",
+        "dev:phpmd": "Check files for mess",
+        "dev:phpdoc": "Check PHPDoc blocks are valid",
+        "test:unit": "Run unit tests",
+        "test:integration": "Run integration tests"
     },
     "extra": {
         "patches": {
