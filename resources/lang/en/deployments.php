@@ -50,6 +50,7 @@ return [
     'warning'                 => 'The deployment could not be started, please make sure you have entered all ' .
                                  'required values.',
     'describe_reason'         => 'Please describe briefly the reason for this deployment',
+    'need_project_name'       => 'Type Project Name',
     'optional'                => 'Select the optional deploy steps to run',
     'very_long_time'          => 'A very long time!',
     'hour'                    => ':time hour|:time hours',

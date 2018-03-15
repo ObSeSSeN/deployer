@@ -86,9 +86,25 @@
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary pull-right btn-save"><i class="fa fa-save"></i> {{ trans('projects.deploy') }}</button>
+                    <input type="hidden" id="project-name" value="{{ $project->name }}">
+                    <input type="text" id="entered-project-name" placeholder="{{ trans('deployments.need_project_name') }}" class="form-control" style="width:50%;display:inline-block;margin-right: 10px;border-radius:3px;">
+                    <button type="submit" id="deploy-submit-button"  class="btn btn-primary pull-right btn-save" disabled><i class="fa fa-save"></i> {{ trans('projects.deploy') }}</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+@push('javascript')
+    <script type="text/javascript">
+        var projectName = $('#project-name').val();
+
+        $('#entered-project-name').on('keyup', function () {
+            var self = $(this);
+            if (self.val() === projectName) {
+                $('#deploy-submit-button').prop('disabled', false);
+                self.prop('disabled', true);
+            }
+        });
+    </script>
+@endpush

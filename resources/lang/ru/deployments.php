@@ -49,6 +49,7 @@ return [
     'warning'               => 'The deployment could not be started, please make sure you have entered ' .
                                'all required values.',
     'describe_reason'       => 'Please describe briefly the reason for this deployment',
+    'need_project_name'     => 'Введите название проекта',
     'optional'              => 'Выберите опциональные шаги сборки для старта',
     'very_long_time'        => 'Очень давно!',
     'hour'                  => 'часов\: :time',
