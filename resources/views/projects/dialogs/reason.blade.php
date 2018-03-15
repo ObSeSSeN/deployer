@@ -97,14 +97,13 @@
 
 @push('javascript')
     <script type="text/javascript">
-        var projectName = $('#project-name').val();
+        var inputProjectName = document.getElementById('entered-project-name');
 
-        $('#entered-project-name').on('keyup', function () {
-            var self = $(this);
-            if (self.val() === projectName) {
-                $('#deploy-submit-button').prop('disabled', false);
-                self.prop('disabled', true);
+        inputProjectName.onkeyup = function () {
+            if (inputProjectName.value === document.getElementById('project-name').value) {
+                document.getElementById('deploy-submit-button').disabled = false;
+                inputProjectName.disabled = true;
             }
-        });
+        };
     </script>
 @endpush
