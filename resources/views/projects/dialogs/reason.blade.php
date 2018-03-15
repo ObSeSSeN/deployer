@@ -100,7 +100,7 @@
         var inputProjectName = document.getElementById('entered-project-name');
 
         inputProjectName.onkeyup = function () {
-            if (inputProjectName.value === document.getElementById('project-name').value) {
+            if (inputProjectName.value.toUpperCase() === document.getElementById('project-name').value.toUpperCase()) {
                 document.getElementById('deploy-submit-button').disabled = false;
                 inputProjectName.disabled = true;
             }
