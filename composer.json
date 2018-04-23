@@ -40,7 +40,7 @@
         "lubusin/laravel-decomposer": "^1.0",
         "mccool/laravel-auto-presenter": "^5.0",
         "melihovv/laravel-log-viewer": "^1.2",
-        "michele-angioni/multi-language": "0.3",
+        "michele-angioni/multi-language": "0.4",
         "pda/pheanstalk": "~3.1",
         "pragmarx/google2fa": "^1.0.0",
         "predis/predis": "~1.0",
@@ -132,9 +132,6 @@
     },
     "extra": {
         "patches": {
-            "michele-angioni/multi-language": {
-                "Laravel 5.4 support for PHP 5.6": "https://www.phpdeployment.org/patches/0002-Multilanguage.patch"
-            },
             "laravel-notification-channels/twilio": {
                 "5.4 bug fix": "https://www.phpdeployment.org/patches/0003-dependency-resolution-bug.patch"
             }
