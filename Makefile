@@ -8,6 +8,10 @@ YELLOW   := $(shell tput -Txterm setaf 3)
 RESET    := $(shell tput -Txterm sgr0)
 COMPOSER := $(shell command -v composer 2> /dev/null)
 
+ifndef COMPOSER_CACHE_DIR
+COMPOSER_CACHE_DIR := ~/.composer/cache
+endif
+
 composer: ##@production Install composer locally
 ifndef COMPOSER
 	curl --silent https://getcomposer.org/installer | php -- --quiet
@@ -36,7 +40,7 @@ install-dev: ##@development Install dev dependencies
 	@$(MAKE) docker-install-dev
 
 update-deps: ##@development Update dependencies
-	@docker-compose run --rm composer update --no-interaction --no-suggest --prefer-dist --no-suggest
+	@docker-compose run -v $(COMPOSER_CACHE_DIR):/tmp/cache --rm composer update --no-interaction --no-suggest --prefer-dist --no-suggest
 	@docker-compose exec node npm upgrade
 
 clean: ##@development Clean cache, logs and other temporary files
@@ -143,11 +147,11 @@ docker-migrate: ##@docker Runs the migrations inside the container
 	@docker-compose exec php-fpm php artisan migrate
 
 docker-install:
-	@docker-compose run --rm composer install --optimize-autoloader --no-dev --prefer-dist --no-interaction --no-suggest --ignore-platform-reqs
+	@docker-compose run -v $(COMPOSER_CACHE_DIR):/tmp/cache --rm composer install --optimize-autoloader --no-dev --prefer-dist --no-interaction --no-suggest --ignore-platform-reqs
 	@docker-compose exec node npm install --production
 
 docker-install-dev:
-	@docker-compose run --rm composer install --no-interaction --no-suggest --prefer-dist --no-suggest --ignore-platform-reqs
+	@docker-compose run -v $(COMPOSER_CACHE_DIR):/tmp/cache --rm composer install --no-interaction --no-suggest --prefer-dist --no-suggest --ignore-platform-reqs
 	@docker-compose exec node npm install
 
 # --------------------------------------------------------- #
@@ -197,7 +201,7 @@ travis:
 endif
 
 # PHPUnit for Travis
-ifeq "$(TRAVIS_PHP_VERSION)" "7.1.0"
+ifeq "$(TRAVIS_PHP_VERSION)" "7.1"
 phpunit-ci:
 	# phpdbg isn't working on travis, hitting the max open files limit
 	@php vendor/bin/phpunit --coverage-text=/dev/null --coverage-php=storage/app/tmp/unit.cov \
@@ -207,8 +211,8 @@ phpunit-ci:
 	@php vendor/bin/phpunit --coverage-text=/dev/null --coverage-php=storage/app/tmp/integration.cov \
 			--log-junit=storage/app/tmp/integration.junit.xml --testsuite "Integration Tests"
 	@php vendor/bin/phpcov merge storage/app/tmp/ \
-			--html storage/app/tmp/coverage/ --clover storage/app/tmp/coverage.xml
-	@php vendor/bin/phpjunitmerge --names="*.junit.xml" storage/app/tmp/ storage/app/tmp/junit.xml
+			--html storage/app/tmp/coverage/ --clover clover.xml
+	@php vendor/bin/phpjunitmerge --names="*.junit.xml" storage/app/tmp/ junit.xml
 	@rm -f storage/app/tmp/*.cov storage/app/tmp/*.junit.xml
 else
 phpunit-ci:
